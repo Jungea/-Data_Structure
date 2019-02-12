@@ -1,0 +1,116 @@
+[mid2] 연결 리스트
+----------------------------------------------------------
+첨부한 코드는 단순 연결리스트 클래스 MyNewList를 정의하고 이를 이용하는 프로그램이다.
+주석을 참고하여 첨부한 코드의 (1)~(2)를 완성하시오.
+
+- 실행 예 
+mid2 : 홍길동
+
+리스트: 5 5 3 5 3 0 5 4 0 4 
+0의 갯수  = 2
+1의 갯수  = 0
+2의 갯수  = 0
+3의 갯수  = 2
+4의 갯수  = 2
+5의 갯수  = 4
+전체 갯수  = 10
+리스트: 5 5 3 5 3 0 5 4 0 4 
+
+----------------------------------------------------------
+목적
+- 단순 연결 리스트 구현을 연습한다.
+
+----------------------------------------------------------
+유의사항
+- 들여쓰기
+- 식별자 이름을 자바 관례에 맞게 적절히 붙일 것
+- command-line에서 
+  > java -jar course1.jar 
+  로 채점합니다. 철자도 똑같게 이 명령이 제대로 실행되어야 합니다.
+- 과제코드와 본인의 이름을 맨 처음 출력
+
+----------------------------------------------------------
+제출  
+- 실행파일: 과제코드.jar 파일 
+- 소스코드파일: .java 파일
+
+
+//MyNewList를 이용하는 클래스
+public class MyNewListTest { 
+	public static void main(String[] args) { 
+		System.out.println("mid2 : 홍길동\n"); 
+
+		// 비어있는 리스트인 MyNewList 객체를 생성
+		MyNewList list = new MyNewList();
+		
+		// 리스트의 맨 앞에 0~5 범위의 원소 10개 삽입
+		for(int i = 0; i < 10; i++)
+			list.addFirst((int)(Math.random() * 6));
+				
+		// 리스트를 출력
+		list.printList();
+
+		// 리스트의 원소들 중 0~5 범위의 값이 각각 몇개씩인지 알아봄
+		int total = 0;
+		for(int i = 0; i < 6; i++) {
+			int num = list.count(i);
+			total += num;
+			System.out.println(i + "의 갯수  = " + num);
+		}
+		System.out.println("전체 갯수  = " + total);
+		
+		// 리스트를 출력
+		list.printList();	
+	}
+} 
+
+
+//단순 연결리스트로 선형 리스트를 구현한 클래스
+public class MyNewList {
+
+	// 리스트 노드 구조를 표현하는 클래스
+	private class Node {
+		int data;
+		Node link;
+		Node(int data) {
+			this.data = data;
+			this.link = null;
+		}
+	}
+
+	// 리스트의 맨 앞 원소를 가리키는 인스턴스 변수
+	private Node head = null;
+
+
+	// (1) item을 리스트의 맨 앞에 삽입하는 메소드
+	public void addFirst(int item) {
+
+
+
+
+
+	}
+
+	// (2) 리스트의 원소 중 x인 것의 갯수를 세어 리턴하는 메소드
+	public int count(int x) {
+
+
+
+
+
+
+
+	}
+	
+	// 리스트의 원소를 모두 출력하는 메소드
+	public void printList() {
+		System.out.print("리스트: ");
+		Node tmp = head;
+		while(tmp != null) {
+			System.out.print(tmp.data + " ");
+			tmp = tmp.link;
+		}
+		System.out.println();
+	}
+}
+

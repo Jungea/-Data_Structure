@@ -1,0 +1,117 @@
+[course7] 원형큐
+
+----------------------------------------------------------
+첨부한 코드는 크기가 5인 배열로 원형큐를 구현한 프로그램이다. 완성하시오.
+
+- 유의: 큐에 저장된 원소 수를 나타내는 변수를 사용하지 않고,
+front와 rear의 관계로 큐가 비었는지 가득찼는지를 검사하고자 한다.
+
+----------------------------------------------------------
+목적
+- 원형 큐를 구현한다.
+
+----------------------------------------------------------
+유의사항
+- 들여쓰기
+- 식별자 이름을 자바 관례에 맞게 적절히 붙일 것
+- command-line에서
+  > java -jar course1.jar
+  로 채점합니다. 철자도 똑같게 이 명령이 제대로 실행되어야 합니다.
+- 과제코드와 본인의 이름을 맨 처음 출력
+
+----------------------------------------------------------
+제출 
+- 실행파일: 과제코드.jar 파일
+- 소스코드파일: .java 파일
+
+
+// MyArrayQueue 클래스를 테스트하는 클래스
+public class MyArrayQueueTest {
+ public static void main(String[] args) {
+  System.out.println("course7: 홍길동");
+  
+  // MyArrayQueue 객체를 생성하고, 삽입, 삭제 연산을 수행
+  MyArrayQueue queue = new MyArrayQueue();
+
+  queue.enQueue(1);
+  queue.enQueue(2);
+
+  System.out.println(queue.deQueue()); // 출력: 1
+  System.out.println(queue.deQueue()); // 출력: 2
+
+  queue.enQueue(3);
+  queue.enQueue(4);
+
+  System.out.println(queue.deQueue()); // 출력: 3
+  System.out.println(queue.deQueue()); // 출력: 4
+
+  queue.enQueue(5);
+  queue.enQueue(6);
+  queue.enQueue(7);
+  queue.enQueue(8);
+  queue.enQueue(9); // 삽입 실패하여 오류 메시지 출력할 것임
+  queue.enQueue(10); // 삽입 실패하여 오류 메시지 출력할 것임
+
+  while(!queue.isEmpty())
+   System.out.print(queue.deQueue() + " "); // 출력: 5 6 7 8
+  System.out.println();
+
+  System.out.println(queue.deQueue()); // 삭제 실패하여 예외발생할 것임
+
+  System.out.println("실행하지 않을 문장임");
+ }
+}
+
+ 
+
+// 크기가 5인 배열로 원형 큐를 구현한 클래스 - 최대 4개의 원소를 저장할 수 있음
+public class MyArrayQueue {
+ // (1) private 인스턴스 변수 선언: 배열(array), 배열 크기(arraySize), front, rear
+
+ 
+ 
+ 
+ 
+ // (2) 생성자 : 크기가 5인 배열로 큐를 구현하도록 인스턴스 변수들을 초기화
+ public MyArrayQueue() {
+
+ 
+ 
+ 
+ 
+ }
+ 
+ // 큐가 비어있는지를 검사
+ public boolean isEmpty() {
+  return rear == front;
+ }
+ 
+ // 큐가 가득찼는지를 검사
+ public boolean isFull() {
+  return (rear + 1) % arraySize == front;
+ }
+ 
+ // (3) 큐에 data를 삽입
+ public void enQueue(int data) {
+  if(isFull())
+   System.out.println("큐가 가득차서 삽입 실패: " + data);
+  else {
+
+  
+  
+  
+  
+  }
+ }
+ 
+ // (4) 큐에서 원소를 하나 삭제하여 리턴
+ public int deQueue() {
+  if(isEmpty())
+   throw new NoSuchElementException();
+
+ 
+ 
+ 
+ 
+ }
+}

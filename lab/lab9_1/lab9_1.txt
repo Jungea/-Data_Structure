@@ -1,0 +1,259 @@
+[lab9_1] 이진트리구현
+
+----------------------------------------------------------
+첨부한 파일은 int형 데이터를 갖는 이진트리를 배열과 연결자료구조로 구현한 클래스와 이를 이용하는 프로그램이다.
+주석을 참고하여 완성하시오.
+
+- Main 클래스
+
+- MyLinkedTree 클래스
+ 
+- MyArrayTree 클래스
+
+
+- 실행 예:
+lab9_1: 홍길동
+
+연결자료구조 구현 트리1
+preorder:1 2 4 5 3 6 7
+inorder:4 2 5 1 6 3 7
+left:1 2 4
+
+연결자료구조 구현 트리2
+preorder:
+inorder:
+left:
+
+배열 구현 트리1
+preorder:1 2 4 8 5 3 6 7
+inorder:8 4 2 5 1 6 3 7
+left:1 2 4 8
+
+배열 구현 트리2
+preorder:
+inorder:
+left:
+
+
+----------------------------------------------------------
+목적
+- binary tree 구현과 순회를 연습한다.
+
+----------------------------------------------------------
+유의사항
+- 적절한 comment
+//***************************
+// 파일명: ... .java
+// 작성자: ...
+// 작성일: ...
+// 프로그램 설명:...
+//***************************
+
+- 들여쓰기
+- 식별자 이름을 자바 관례에 맞게 적절히 붙일 것
+- command-line에서 java -jar 과제코드.jar 로 채점합니다.
+철자도 똑같게 이 명령이 제대로 실행되어야 합니다.
+- 과제명과 본인의 이름을 맨 처음 출력
+
+----------------------------------------------------------
+제출 
+- 과제코드.jar 파일
+- .java 파일들
+
+
+//배열로 구현한 트리와 연결자료구조로 구현한 트리를 만들고 테스트하는 프로그램
+public class Main {
+ public static void main(String[] args) {
+  System.out.println("lab9_1: 홍길동");
+
+  // 연결자료구조로 구현한 노드 7개 예제 트리를 만들고 메소드 호출
+  System.out.println(" 연결자료구조 구현 트리1");
+  MyLinkedTree tree7 = new  MyLinkedTree(7, null, null);
+  MyLinkedTree tree6 = new  MyLinkedTree(6, null, null);
+  MyLinkedTree tree5 = new  MyLinkedTree(5, null, null);
+  MyLinkedTree tree4 = new  MyLinkedTree(4, null, null);
+  MyLinkedTree tree3 = new  MyLinkedTree(3, tree6, tree7);
+  MyLinkedTree tree2 = new  MyLinkedTree(2, tree4, tree5);
+  MyLinkedTree linkedTree1 = new  MyLinkedTree(1, tree2, tree3);
+
+  System.out.print("preorder:");
+  linkedTree1.printPreorder(); // 전위순회하며 출력
+  System.out.print("inorder:");
+  linkedTree1.printInorder();  // 중위순회하며 출력
+  System.out.print("left:");
+  linkedTree1.printLeft(); // 왼쪽 자식들을 출력
+  
+  // 연결자료구조로 구현한 공백 예제 트리를 만들고 메소드 호출
+  System.out.println(" 연결자료구조 구현 트리2");
+  MyLinkedTree linkedTree2 = new  MyLinkedTree();
+
+  System.out.print("preorder:");
+  linkedTree2.printPreorder(); // 전위순회하며 출력
+  System.out.print("inorder:");
+  linkedTree2.printInorder();  // 중위순회하며 출력
+  System.out.print("left:");
+  linkedTree2.printLeft(); // 왼쪽 자식들을 출력
+ 
+  // 배열로 구현한 노드 8개 예제 트리를 만들고 메소드 호출
+  System.out.println(" 배열 구현 트리1");
+  MyArrayTree arrayTree1 = new MyArrayTree(new int[] {1, 2, 3, 4, 5, 6, 7, 8});
+  System.out.print("preorder:");
+  arrayTree1.printPreorder(); // 전위순회하며 출력
+  System.out.print("inorder:");
+  arrayTree1.printInorder(); // 중위순회하며 출력
+  System.out.print("left:");
+  arrayTree1.printLeft();  // 왼쪽 자식들을 출력
+
+  // 배열로 구현한 공백 예제 트리를 만들고 메소드 호출
+  System.out.println(" 배열 구현 트리2");
+  MyArrayTree arrayTree2 = new MyArrayTree();
+  System.out.print("preorder:");
+  arrayTree2.printPreorder(); // 전위순회하며 출력
+  System.out.print("inorder:");
+  arrayTree2.printInorder(); // 중위순회하며 출력
+  System.out.print("left:");
+  arrayTree2.printLeft();  // 왼쪽 자식들을 출력
+ }
+}
+
+ 
+
+//정수 데이터를 저장하기 위해 연결자료구조로 구현한 이진 트리 클래스
+public class MyLinkedTree {
+ // 트리 노드 클래스 -- data, leftChild, rightChild 필드를 지님
+ private class Node {
+
+ 
+
+ 
+
+ }
+
+ // 트리의 루트 노드를 가리키는 인스턴스 변수 root
+
+ 
+
+ 
+
+ // 공백 트리로 초기화 하는 생성자
+ public MyLinkedTree() {
+  root = null;
+ }
+ 
+ // 루트 노드의 데이터가 data이고, leftSubtree, rightSubtree를 좌우 서브트리로 하도록 트리를 초기화 하는 생성자
+ public MyLinkedTree(int data, MyLinkedTree leftSubtree, MyLinkedTree rightSubtree)  {
+  root = new Node();           
+  root.data = data;
+
+  if (leftSubtree == null)   
+   root.leftChild = null;           
+  else   
+   root.leftChild = leftSubtree.root;
+
+  if (rightSubtree == null)   
+   root.rightChild = null;           
+  else  
+   root.rightChild = rightSubtree.root;
+ }
+
+ // 트리 전체를 전위 순회하며 노드의 데이터를 출력
+ public void printPreorder()  {   
+  preorder(root);
+  System.out.println();
+ }
+
+ // p를 루트로 하는 트리를 전위 순회하는 메소드
+ private void preorder(Node p)  { 
+
+ 
+
+ }  
+ 
+ // 트리 전체를 중위 순회하며 노드의 데이터를 출력
+ public void printInorder()  {  
+  inorder(root);
+  System.out.println();
+ }
+
+ // p를 루트로 하는 트리를 중위 순회하는 메소드
+ private void inorder(Node p)  { 
+
+ 
+
+ 
+
+ }  
+ 
+ // 루트노드부터 리프노드에 이르기까지 왼쪽 자식들을 출력하는 메소드(재귀 메소드 아님. 반복문 이용할 것)
+ public void printLeft() {
+
+ 
+
+ 
+
+ }
+}
+
+ 
+
+ 
+
+//정수 데이터를 저장하기 위해 배열로 구현한 이진 트리 클래스
+public class MyArrayTree {
+ private int[] treeArray; // 트리를 구현한 배열
+ private int number;   // 트리의 원소 수
+
+ // 공백 트리로 초기화 하는 생성자
+ public MyArrayTree() {
+  number = 0;
+  treeArray = new int[100];
+ }
+ 
+ // 매개변수로 받은 배열로 트리를 초기화하는 생성자
+ public MyArrayTree(int[] array) {
+  number = array.length;
+  treeArray = new int[number];
+  for(int i = 0; i < number; i++) {
+   treeArray[i] = array[i];
+  }
+ }
+
+ // 트리 전체를 전위 순회하며 노드의 데이터를 출력
+ public void printPreorder() {
+  preorder(0);
+  System.out.println();
+ }
+
+ // 인덱스 index인 노드를 루트로 하는 트리를 전위 순회하는 메소드
+ private void preorder(int index) {
+
+ 
+
+
+ }
+
+ // 트리 전체를 중위 순회하며 노드의 데이터를 출력
+ public void printInorder() {
+  inorder(0);
+  System.out.println();
+ }
+
+ // 인덱스 index인 노드를 루트로 하는 트리를 중위 순회하는 메소드
+ private void inorder(int index) {
+
+ 
+
+ 
+
+ }
+
+ // 루트노드부터 리프노드에 이르기까지 왼쪽 자식들을 출력하는 메소드(재귀 메소드 아님. 반복문 이용할 것)
+ public void printLeft() {
+
+ 
+
+ 
+
+
+ }
+}

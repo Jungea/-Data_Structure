@@ -1,0 +1,144 @@
+[course10] 이진탐색트리
+
+----------------------------------------------------------
+첨부한 코드는 연결자료구조로 구현한 이진 탐색트리 프로그램이다.
+이 트리에는 key 값만 저장하는 것이 아니라 (key, value) 쌍을 저장한다.
+주석을 참고하여 완성하시오.
+
+- key와 value는 모두 String형임
+
+- 탐색에 실패하는 경우 예외를 발생시키지 말고, null 값을 리턴
+
+----------------------------------------------------------
+목적
+- 이진탐색트리로 구현한 Map 자료구조 구현을 연습한다.
+
+----------------------------------------------------------
+유의사항
+- 들여쓰기
+- 식별자 이름을 자바 관례에 맞게 적절히 붙일 것
+- command-line에서
+  > java -jar course1.jar
+  로 채점합니다. 철자도 똑같게 이 명령이 제대로 실행되어야 합니다.
+- 과제코드와 본인의 이름을 맨 처음 출력
+
+----------------------------------------------------------
+제출 
+- 실행파일: 과제코드.jar 파일
+- 소스코드파일: .java 파일
+
+ 
+
+
+/*
+ * 파일명: MyTreeMapTest.java
+ * 작성일: 2018.11.20
+ * 작성자: 홍길동
+ * 설명: (String, String) 쌍을 저장하는 이진탐색트리를 생성하고 연산을 수행하는 프로그램
+ */
+
+public class MyTreeMapTest {
+ public static void main(String[] args) {
+  System.out.println("course10 : 홍길동");
+  
+  // 공백 이진탐색트리 tree를 생성
+  MyTreeMap tree = new MyTreeMap();
+  
+  // 공백 tree에서 key 값에 해당하는 value를 조회
+  System.out.println("kim=" + tree.get("kim"));
+  System.out.println();
+  
+  // tree에 (key, value) 쌍을 삽입  
+  tree.put("kim", "Seoul");
+  tree.put("park", "Pusan");
+  tree.put("choi", "Incheon");
+  tree.put("hong", "Seoul");
+  tree.put("seo", "Pusan");
+  tree.put("lee", "Suwon");
+  tree.put("kim", "Jeju");
+  
+  // tree에서 key 값에 해당하는 value를 조회
+  System.out.println("kim=" + tree.get("kim"));
+  System.out.println("park=" + tree.get("park"));
+  System.out.println("choi=" + tree.get("choi"));
+  System.out.println("hong=" + tree.get("hong"));
+  System.out.println("seo=" + tree.get("seo"));
+  System.out.println("lee=" + tree.get("lee"));
+  
+  // (1) tree에 <본인성명, 도시> 쌍을 삽입
+  
+  
+
+
+  // (2) tree에서 본인성명을 키값으로 하여 조회하여 결과(도시)를 출력
+  
+  
+  
+ }
+}
+
+/*
+ * 파일명: MyTreeMap.java
+ * 작성일: 2018.11.20
+ * 작성자: 홍길동
+ * 설명: (String, String) 쌍을 저장하는 이진탐색트리를 연결자료구조로 구현한 클래스
+ */
+
+public class MyTreeMap {
+ // 트리의 노드를 표현하는 private 클래스 Node - 필드(String형 key, String형 value, leftChild, rightChild), 생성자(key, value를 매개변수로 받아 초기화)
+ private class Node {
+  String key;
+  String value;
+  Node leftChild = null;
+  Node rightChild = null;
+  Node(String key, String value) {
+   this.key = key;
+   this.value = value;
+  }
+ }
+ 
+ // private 인스턴스 변수 트리의 루트 노드를 가킬 변수(root)를 선언하고 null로 초기화
+ private Node root = null;
+
+ // 트리에 (key, value) 쌍을 삽입하는 메소드
+ public void put(String key, String value) {
+  root = insertKey(root, key, value);
+ }
+
+ // (3) p를 루트로 하는 트리에 (key, value) 쌍을 삽입 후 루트를 리턴하는 메소드(recursive algorithm)
+ private Node insertKey(Node p, String key, String value) {
+  if(p == null) {  
+   Node newNode = new Node(key, value);
+   return newNode; 
+  }
+  else if(_________________) {   // 키 값이 p의 키값보다 작은 경우
+   p.leftChild = insertKey(p.leftChild, key, value);
+   return p;  // 루트 불변
+  }
+  else if(_________________) { // 키 값이 p의 키값보다 큰 경우
+   p.rightChild = insertKey(p.rightChild, key, value);
+   return p;  // 루트 불변       
+  }
+  else {  // 키 값이 p의 키값과 같은 경우, 삽입 오류를 내지 않고 노드 p의 value를 새로운 값으로 갱신
+   
+   _________________________________________;
+   return p;   // 루트 불변
+  }
+ }  
+
+ // (4) 트리에서 키값 key를 찾아 그에 해당하는 value를 리턴하는 메소드
+ //     key 값을 찾지 못하면 null을 리턴할 것
+ //     ******* 반드시 iterative method로 작성할 것.  즉, recursive algorithm 사용하지 말 것
+ public String get(String key) {
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+ }
+}

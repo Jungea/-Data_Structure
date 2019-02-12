@@ -1,0 +1,200 @@
+[lab8_1] 동기화된 원형큐 ** 제출하지 않음
+
+----------------------------------------------------------
+첨부한 코드는 동기화된 원형큐를 나타내는 추상자료형인 SynchronizedQueue 클래스를 정의하고 이용하는 프로그램이다.
+아래 설명을 참고하여 SynchronizedQueue 클래스를 이해하고 SynchronizedQueue 클래스 소스 코드에 적절히 주석을 달아 코드를 설명하시오.
+
+- SynchronizedQueue는 내부적으로 배열로 구현하며, 크기 n인 배열에 n-1개의 정수를 저장할 수 있다.
+
+private 인스턴스 변수:
+   array(정수 배열)
+   capacity(용량. 즉, 배열 크기)
+   front
+   rear
+   조건변수 notFull, notEmpty
+
+public 메소드:
+   isEmpty
+   isFull
+   enQueue - 큐가 가득찼으면 notFull 조건 변수에서 기다림
+   deQueue - 큐가 비었으면 notEmpty 조건 변수에서 기다림
+   단, enQueue, deQueue는 스레드들이 동시에 실행하더라도 올바른 결과가 나오도록 동기화
+
+- SynchronizedQueueTest 클래스의 main 메소드는 다음을 수행
+
+원형큐를 생성
+원형큐를 공유하는 생산자 스레드 2개, 소비자 스레드 2개를 생성하여 실행
+   생산자1은 1~10을 생산하여 큐에 삽입
+   생성자2는 11~10을 생산하여 큐에 삽입
+   소비자1과 소비자2는 10개의 정수를 큐에서 삭제하여 모두 더한 다음 합을 출력
+
+----------------------------------------------------------
+목적
+- 배열을 이용한 동기화된 원형 큐 구현을 이해한다.
+
+----------------------------------------------------------
+유의사항
+- 적절한 comment
+//***************************
+// 파일명: ... .java
+// 작성자: ...
+// 작성일: ...
+// 설명:...
+//***************************
+
+- 들여쓰기
+- 식별자 이름을 자바 관례에 맞게 적절히 붙일 것
+- command-line에서 java -jar 과제코드.jar 로 채점합니다. 철자도 똑같게 이 명령이 제대로 실행되어야 합니다.
+- 과제코드와 본인의 이름을 맨 처음 출력
+
+----------------------------------------------------------
+제출
+- 과제코드.jar 파일
+- .java 파일들
+
+ 
+
+
+/*
+ * 파일명 : SynchronizedQueueTest.java
+ * 작성일: 2018년 11월 1일
+ * 작성자: 홍길동
+ * 내용: 하나의 원형 큐를 공유하는 생산자, 소비자 스레드를 실행하는 프로그램
+ */
+
+public class SynchronizedQueueTest {
+ public static void main(String[] args) {
+  System.out.println("lab8_1: 홍길동");
+
+  // 크기 5인 원형 큐를 생성
+  SynchronizedQueue queue = new SynchronizedQueue(5);
+
+  // 원형 큐를 공유하는 생산자 스레드, 소비자 스레드를 실행
+  Thread producer1 = new ProducerThread(queue, 1);
+  Thread producer2 = new ProducerThread(queue, 11);
+  Thread consumer1 = new ConsumerThread(queue);
+  Thread consumer2 = new ConsumerThread(queue);
+  producer1.start();
+  producer2.start();
+  consumer1.start();
+  consumer2.start();
+ }
+}
+
+
+class ProducerThread extends Thread {
+ private SynchronizedQueue queue;
+ private int startNumber;
+
+ public ProducerThread(SynchronizedQueue queue, int startNumber) {
+  this.queue = queue;
+  this.startNumber = startNumber;
+ }
+
+ @Override
+ public void run() {
+  for(int i = startNumber; i < startNumber + 10; i++) {
+   try {
+    queue.enQueue(i);
+    sleep((int) (Math.random() * 500));
+   } catch (InterruptedException e) {
+    e.printStackTrace();
+   }
+  }
+ }
+}
+
+
+class ConsumerThread extends Thread {
+ private SynchronizedQueue queue;
+
+ public ConsumerThread(SynchronizedQueue queue) {
+  this.queue = queue;
+ }
+
+ @Override
+ public void run() {
+  int sum = 0;
+  try {
+   sleep(1000);
+   for(int i = 0; i < 10; i++) {
+    int value = queue.deQueue();  
+    sum += value;
+    sleep((int) (Math.random() * 500));
+   }
+  } catch (InterruptedException e) {
+   e.printStackTrace();
+  }
+  System.out.println(" " + currentThread().getName() + "가 소비한 정수 합 = " + sum);
+ }
+}
+
+ 
+
+
+/*
+ * 파일명 : SynchronizedQueue.java
+ * 작성일: 2018년 11월 1일
+ * 작성자: 홍길동
+ * 내용: 배열로 구현한 동기화된 원형 큐
+ */
+
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+public class SynchronizedQueue {
+ private final Lock lock = new ReentrantLock();
+ private final Condition notFull  = lock.newCondition();
+ private final Condition notEmpty = lock.newCondition();
+ private int[] array;
+ private int arraySize;
+ private int front = 0;
+ private int rear = 0;
+ 
+ public SynchronizedQueue(int arraySize) {
+  this.arraySize = arraySize;
+  array = new int[arraySize];
+ }
+ 
+ public boolean isEmpty() {
+  return front == rear;
+ }
+ 
+ public boolean isFull() {
+  return (rear + 1) % arraySize == front;
+ }
+
+ public void enQueue(int item) throws InterruptedException {
+  lock.lock();
+  try {
+   while (isFull()) {
+    System.out.println(Thread.currentThread().getName() + ": 큐가 가득차서 기다립니다.");
+    notFull.await();    
+   }
+   rear = (rear + 1) % arraySize;
+   array[rear] = item;
+   System.out.println(Thread.currentThread().getName() + ": 큐 삽입 " + item);
+   notEmpty.signal();
+  } finally {
+   lock.unlock();
+  }
+ }
+
+ public int deQueue() throws InterruptedException {
+  lock.lock();
+  try {
+   while (isEmpty()) {
+    System.out.println(" " + Thread.currentThread().getName() + ": 큐가 비어서 기다립니다.");
+    notEmpty.await();
+   }
+   front = (front + 1) % arraySize;
+   int item = array[front];
+   System.out.println(" " + Thread.currentThread().getName() + ": 큐 삭제 " + item);
+   notFull.signal();
+   return item;
+  } finally {
+   lock.unlock();
+  }
+ }
+}
